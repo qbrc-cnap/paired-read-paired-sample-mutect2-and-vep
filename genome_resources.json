@@ -1,0 +1,36 @@
+{
+    "Ensembl Homo sapiens GRCh38.95":{
+        "ref_fasta": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa",
+        "ref_fasta_index": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.fai",
+        "contig_list": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.contigs.txt",
+        "ref_dict": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.dict",
+        "ref_bwt": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.bwt",
+        "ref_sa": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.sa",
+        "ref_amb": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.amb",
+        "ref_ann": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.ann",
+        "ref_pac": "gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.dna.primary_assembly.fa.pac",
+        "dbsnp": "gs://cnap-hsph-resources/grch38.95/other-resources/dbsnp_146.GRCh38.vcf.gz",
+        "dbsnp_index": "gs://cnap-hsph-resources/grch38.95/other-resources/dbsnp_146.GRCh38.vcf.gz.tbi",
+        "known_indels": "gs://cnap-hsph-resources/grch38.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh38.vcf.gz",
+        "known_indels_index": "gs://cnap-hsph-resources/grch38.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh38.vcf.gz.tbi",
+        "vep_species": "homo_sapiens",
+        "vep_cache_tar": "gs://cnap-hsph-resources/grch38.95/other-resources/vep_cache.grch38.95.tar"
+    },
+    "Ensembl Homo sapiens GRCh37.95":{
+        "ref_fasta": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa",
+        "ref_fasta_index": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.fai",
+        "contig_list": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.contigs.txt",
+        "ref_dict": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.dict",
+        "ref_bwt": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.bwt",
+        "ref_sa": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.sa",
+        "ref_amb": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.amb",
+        "ref_ann": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.ann",
+        "ref_pac": "gs://cnap-hsph-resources/grch37.95/Homo_sapiens.GRCh37.dna.primary_assembly.fa.pac",
+        "dbsnp": "gs://cnap-hsph-resources/grch37.95/other-resources/dbsnp_138.GRCh37.vcf.gz",
+        "dbsnp_index": "gs://cnap-hsph-resources/grch37.95/other-resources/dbsnp_138.GRCh37.vcf.gz.tbi",
+        "known_indels": "gs://cnap-hsph-resources/grch37.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh37.vcf.gz",
+        "known_indels_index": "gs://cnap-hsph-resources/grch37.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh37.vcf.gz.tbi",
+        "vep_species": "homo_sapiens",
+        "vep_cache_tar": "gs://cnap-hsph-resources/grch37.95/other-resources/vep_cache.grch37.95.tar"
+    }
+}
