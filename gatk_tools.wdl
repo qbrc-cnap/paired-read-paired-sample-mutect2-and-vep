@@ -274,6 +274,57 @@ task haplotypecaller {
     }
 }
 
+task mutect {
+    File normal_bam
+    File normal_bam_index
+    File tumor_bam
+    File tumor_bam_index
+    File normal_dedup_bam
+    File normal_dedup_bam_index
+    File tumor_dedup_bam
+    File tumor_dedup_bam_index
+    String use_dedup
+    String sample_name
+    File ref_fasta
+    File ref_fasta_index
+    File ref_dict
+    String interval
+
+    # runtime commands
+    Int disk_size = 500
+
+    command {
+        if [ "${use_dedup}" = "true" ]
+        then
+            java -Xmx8000m -jar $GATK_JAR \
+                HaplotypeCaller \
+                -R ${ref_fasta} \
+                -I ${input_dedup_bam} \
+                -O ${sample_name}.vcf \
+                -L ${interval};
+        else
+            java -Xmx8000m -jar $GATK_JAR \
+                HaplotypeCaller \
+                -R ${ref_fasta} \
+                -I ${input_bam} \
+                -O ${sample_name}.vcf \
+                -L ${interval};
+        fi
+    }
+
+    output {
+        File output_vcf = "${sample_name}.vcf"
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-variant-detection-workflow-tools:1.1"
+        cpu: 8
+        memory: "12 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+}
+
 task merge_vcf {
     Array[File] input_vcfs
     String sample_name
