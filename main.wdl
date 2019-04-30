@@ -2,13 +2,15 @@ import "single_sample_haplotypecaller.wdl" as single_sample_haplotypecaller
 import "fastqc.wdl" as fastqc
 import "report.wdl" as reporting
 
-workflow PairedHaplotypecallerAndVepWorkflow {
+workflow PairedMatchedMutect2AndVepWorkflow {
     # This workflow is a 'super' workflow that parallelizes
     # HaplotypeCaller and VEP analysis over multiple samples.
 
     # Input files
     Array[File] r1_files
     Array[File] r2_files
+    File match_annotations
+    Array[Array[File]] matched_samples = read_tsv(match_samples.output_annotations)
     Boolean use_dedup
 
     Array[Pair[File, File]] fastq_pairs = zip(r1_files, r2_files)
@@ -113,6 +115,36 @@ workflow PairedHaplotypecallerAndVepWorkflow {
         workflow_title: "Germline exome variant calling"
         workflow_short_description: "A pipline for variant calling and variant annotation from germline exome DNASeq"
         workflow_long_description: "Use this workflow for aligning paired-end Illumina NGS reads with BWA, optional deduplication, base quality score recalibration with GATK, variant calling with GATK HaplotypeCaller, and variant annotation with Ensembl's VEP."
+    }
+}
+
+task match_samples {
+    Array[String] r1_fastq
+    Array[String] r2_fastq
+    File match_annotations
+
+    # runtime parameters
+    Int disk_size = 20
+
+    command {
+        python3 \
+            /usr/local/bin/match_annotations.py \
+            -r1 ${sep=" " r1_fastq} \
+            -r2 ${sep=" " r2_fastq} \
+            -annot match_annotations \
+        > matched_annotations.tsv;
+    }
+
+    output {
+        File output_annotations = "matched_annotations.tsv"
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-variant-detection-workflow-tools:1.1"
+        cpu: 1
+        memory: "2 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
     }
 }
 

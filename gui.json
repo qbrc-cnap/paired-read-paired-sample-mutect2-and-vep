@@ -2,7 +2,21 @@
 	"input_elements": [
 		{
 			"target": {
-				"target_ids": ["PairedHaplotypecallerAndVepWorkflow.r1_files", "PairedHaplotypecallerAndVepWorkflow.r2_files"],
+				"target_ids": ["PairedMatchedMutect2AndVepWorkflow"],
+				"name": "sample_pairs_input",
+				"handler": "single_file_input_mapping.py"
+			},
+			"display_element": {
+				"type": "file_chooser",
+				"regex_filter": "(?:.tsv|.xls|.xlsx|.csv)$",
+				"label": "Tumor / Normal sample pairings:",
+				"choose_multiple": false,
+				"description": "Choose a tumor/normal pairing annotation file. This should have two columns, separated by a \"tab\" (tab-delimited), a \",\", or as an excel file. The first column has the tumor sample's first-in-pair FASTQ filename, the second column has the tumor samples's matching normal sample - also as first-in-pair FASTQ filename. For example, if the FASTQ files are named \"TumorSampleA_R1.fastq.gz,\" \"TumorSampleA_R2.fastq.gz,\" \"NormalSampleA_R1.fastq.gz,\" and \"NormalSampleA_R2.fastq.gz\" then the name that goes in the first column of the file is \"TumorSampleA_R1.fastq.gz,\" and the name that goes in the second column of the file is \"NormalSampleA_R1.fastq.gz.\" The names of the files must match files that have been uploaded, and all samples must have its paired read FASTQ uploaded as well. This will be checked and an error returned if there are any discrepancies. There should NOT be a column header."
+			}
+		},
+		{
+			"target": {
+				"target_ids": ["PairedMatchedMutect2AndVepWorkflow.r1_files", "PairedMatchedMutect2AndVepWorkflow.r2_files"],
 				"name": "input_files",
 				"handler": "input_mapping.py"
 			},
@@ -16,22 +30,22 @@
         },
 		{
 			"target": {
-				"target_ids": ["PairedHaplotypecallerAndVepWorkflow.genome", 
-					"PairedHaplotypecallerAndVepWorkflow.ref_fasta",
-					"PairedHaplotypecallerAndVepWorkflow.ref_fasta_index",
-					"PairedHaplotypecallerAndVepWorkflow.ref_dict",
-					"PairedHaplotypecallerAndVepWorkflow.ref_bwt",
-					"PairedHaplotypecallerAndVepWorkflow.ref_sa",
-					"PairedHaplotypecallerAndVepWorkflow.ref_amb",
-					"PairedHaplotypecallerAndVepWorkflow.ref_ann",
-					"PairedHaplotypecallerAndVepWorkflow.ref_pac",
-					"PairedHaplotypecallerAndVepWorkflow.dbsnp",
-					"PairedHaplotypecallerAndVepWorkflow.dbsnp_index",
-					"PairedHaplotypecallerAndVepWorkflow.known_indels",
-					"PairedHaplotypecallerAndVepWorkflow.known_indels_index",
-					"PairedHaplotypecallerAndVepWorkflow.contig_list",
-					"PairedHaplotypecallerAndVepWorkflow.vep_species",
-					"PairedHaplotypecallerAndVepWorkflow.vep_cache_tar"
+				"target_ids": ["PairedMatchedMutect2AndVepWorkflow.genome", 
+					"PairedMatchedMutect2AndVepWorkflow.ref_fasta",
+					"PairedMatchedMutect2AndVepWorkflow.ref_fasta_index",
+					"PairedMatchedMutect2AndVepWorkflow.ref_dict",
+					"PairedMatchedMutect2AndVepWorkflow.ref_bwt",
+					"PairedMatchedMutect2AndVepWorkflow.ref_sa",
+					"PairedMatchedMutect2AndVepWorkflow.ref_amb",
+					"PairedMatchedMutect2AndVepWorkflow.ref_ann",
+					"PairedMatchedMutect2AndVepWorkflow.ref_pac",
+					"PairedMatchedMutect2AndVepWorkflow.dbsnp",
+					"PairedMatchedMutect2AndVepWorkflow.dbsnp_index",
+					"PairedMatchedMutect2AndVepWorkflow.known_indels",
+					"PairedMatchedMutect2AndVepWorkflow.known_indels_index",
+					"PairedMatchedMutect2AndVepWorkflow.contig_list",
+					"PairedMatchedMutect2AndVepWorkflow.vep_species",
+					"PairedMatchedMutect2AndVepWorkflow.vep_cache_tar"
 				],
 				"name": "genome_choice",
 				"handler": "genome_mapper.py"
@@ -58,10 +72,10 @@
 				"label": "Use deduplicated FASTQ",
 				"description": "Please check for high diversity libraries, such as SureSelect. Lower diversity libraries, such as Haloplex, should not use deduplicted FASTQs."
 			},
-			"target": "PairedHaplotypecallerAndVepWorkflow.use_dedup"
+			"target": "PairedMatchedMutect2AndVepWorkflow.use_dedup"
 		},
 		{
-			"target":"PairedHaplotypecallerAndVepWorkflow.output_zip_name",
+			"target":"PairedMatchedMutect2AndVepWorkflow.output_zip_name",
 			"display_element": {
 				"type": "text",
 				"label": "Output zip-archive name:",
@@ -69,7 +83,7 @@
 			}
 		},
 		{
-			"target": "PairedHaplotypecallerAndVepWorkflow.git_repo_url",
+			"target": "PairedMatchedMutect2AndVepWorkflow.git_repo_url",
 			"display_element": {
 				"type": "dynamic_hidden",
 				"handler": "add_git_repo_url.py",
@@ -79,7 +93,7 @@
 			}
 		},
 		{
-			"target": "PairedHaplotypecallerAndVepWorkflow.git_commit_hash",
+			"target": "PairedMatchedMutect2AndVepWorkflow.git_commit_hash",
 			"display_element": {
 				"type": "dynamic_hidden",
 				"handler": "add_git_hash.py",

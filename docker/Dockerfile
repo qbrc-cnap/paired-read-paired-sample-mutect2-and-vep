@@ -93,6 +93,10 @@ ADD check_fastq.py /opt/software/precheck/
 ADD generate_report.py /usr/local/bin/
 RUN chmod +x /usr/local/bin/generate_report.py
 
+# The script for matching samples
+ADD match_annotations.py /usr/local/bin/
+RUN chmod +x /usr/local/bin/match_annotations.py
+
 # Add the report template and styling:
 RUN mkdir /opt/report
 ADD report.md /opt/report/
