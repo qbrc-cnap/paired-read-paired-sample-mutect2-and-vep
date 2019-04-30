@@ -88,7 +88,7 @@ task perform_align {
     }
 
     runtime {
-        docker: "docker.io/hsphqbrc/gatk-variant-detection-workflow-tools:1.1"
+        docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 8
         memory: "12 G"
         disks: "local-disk " + disk_size + " HDD"
