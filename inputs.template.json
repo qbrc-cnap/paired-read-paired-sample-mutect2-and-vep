@@ -1,5 +1,5 @@
 {
-  "PairedMatchedMutect2AndVepWorkflow.match_annotations": "Array[Array[File]]",
+  "PairedMatchedMutect2AndVepWorkflow.match_annotations": "File",
   "PairedMatchedMutect2AndVepWorkflow.r1_files": "Array[File]",
   "PairedMatchedMutect2AndVepWorkflow.r2_files": "Array[File]",
   "PairedMatchedMutect2AndVepWorkflow.ref_dict": "File",
