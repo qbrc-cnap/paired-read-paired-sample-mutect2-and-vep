@@ -5,6 +5,7 @@ workflow PairedHaplotypecallerAndVepWorkflow {
     # Input files
     Array[File] r1_files
     Array[File] r2_files
+    File match_annotations
     Boolean use_dedup
     
     # Reference files
@@ -47,6 +48,13 @@ workflow PairedHaplotypecallerAndVepWorkflow {
                 r2_file = item.right
         }
     }
+
+    call assert_valid_annotation {
+        input:
+            r1_files = r1_files,
+            r2_files = r2_files,
+            match_annotations = match_annotations
+    }
 }
 
 task assert_valid_fastq {
@@ -63,6 +71,29 @@ task assert_valid_fastq {
         docker: "docker.io/blawney/star_rnaseq:v0.0.1"
         cpu: 2
         memory: "6 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+}
+
+task assert_valid_annotation {
+    Array[String] r1_files
+    Array[String] r2_files
+    File match_annotations
+    
+    Int disk_size = 20
+
+    command <<<
+        python3 /opt/software/precheck/check_annotations.py \
+            -r1 ${sep=" " r1_files} \
+            -r2 ${sep=" " r2_files} \
+            ${match_annotations}
+    >>>
+
+    runtime {
+        docker: "docker.io/blawney/star_rnaseq:v0.0.1"
+        cpu: 1
+        memory: "2 G"
         disks: "local-disk " + disk_size + " HDD"
         preemptible: 0
     }

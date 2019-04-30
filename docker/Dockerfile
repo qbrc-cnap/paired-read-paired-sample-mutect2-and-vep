@@ -88,6 +88,7 @@ ENV LANG=C.UTF-8
 # The scripts for performing pre-workflow checks:
 RUN mkdir /opt/software/precheck
 ADD check_fastq.py /opt/software/precheck/
+ADD check_annotations.py /opt/software/precheck/
 
 # The script for generating the markdown report:
 ADD generate_report.py /usr/local/bin/
