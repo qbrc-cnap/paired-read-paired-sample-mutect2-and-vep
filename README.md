@@ -27,6 +27,8 @@
         * Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
         * dbsnp_146.hg38.vcf.gz
         * dbsnp_146.hg38.vcf.gz.tbi
+    * ftp://ftp.broadinstitute.org/bundle/Mutect2/
+        * af-only-gnomad.hg38.vcf
 ## GRCh37.95
 * primary assembly
     * ftp://ftp.ensembl.org/pub/grch37/release-95/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.primary_assembly.fa.gz
@@ -36,3 +38,5 @@
         * Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx
         * dbsnp_138.hg19.vcf
         * dbsnp_138.hg19.vcf.idx
+    * http://bioinfo5pilm46.mit.edu/software/GATK/resources/
+        * af-only-gnomad.hg19.vcf
