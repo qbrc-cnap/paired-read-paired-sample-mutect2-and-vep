@@ -10,6 +10,8 @@ workflow gatk_test {
     File dbsnp_index
     File known_indels
     File known_indels_index
+    File gnomad
+    File gnomad_index
     Array[String] contigs
 
     call base_recalibrator {
@@ -284,10 +286,13 @@ task mutect {
     File tumor_dedup_bam
     File tumor_dedup_bam_index
     String use_dedup
-    String sample_name
+    String normal_sample_name
+    String tumor_sample_name
     File ref_fasta
     File ref_fasta_index
     File ref_dict
+    File gnomad
+    File gnomad_index
     String interval
 
     # runtime commands
@@ -297,18 +302,26 @@ task mutect {
         if [ "${use_dedup}" = "true" ]
         then
             java -Xmx8000m -jar $GATK_JAR \
-                HaplotypeCaller \
+                Mutect2 \
                 -R ${ref_fasta} \
-                -I ${input_dedup_bam} \
-                -O ${sample_name}.vcf \
-                -L ${interval};
+                -I ${tumor_dedup_bam} \
+                -tumor ${tumor_sample_name} \
+                -I ${normal_dedup_bam} \
+                -normal ${normal_sample_name} \
+                --germline_resource ${gnomad} \
+                -L ${interval} \
+                -O ${tumor_sample_name}.vcf;
         else
             java -Xmx8000m -jar $GATK_JAR \
-                HaplotypeCaller \
+                Mutect2 \
                 -R ${ref_fasta} \
-                -I ${input_bam} \
-                -O ${sample_name}.vcf \
-                -L ${interval};
+                -I ${tumor_bam} \
+                -tumor ${tumor_sample_name} \
+                -I ${normal_bam} \
+                -normal ${normal_sample_name} \
+                --germline_resource ${gnomad} \
+                -L ${interval} \
+                -O ${tumor_sample_name}.vcf;
         fi
     }
 

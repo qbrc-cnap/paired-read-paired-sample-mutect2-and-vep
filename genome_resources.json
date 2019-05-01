@@ -13,6 +13,8 @@
         "dbsnp_index": "gs://cnap-hsph-resources/grch38.95/other-resources/dbsnp_146.GRCh38.vcf.gz.tbi",
         "known_indels": "gs://cnap-hsph-resources/grch38.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh38.vcf.gz",
         "known_indels_index": "gs://cnap-hsph-resources/grch38.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh38.vcf.gz.tbi",
+        "gnomad": "gs://cnap-hsph-resources/grch38.95/other-resources/",
+        "gnomad_index": "gs://cnap-hsph-resources/grch38.95/other-resources/",
         "vep_species": "homo_sapiens",
         "vep_cache_tar": "gs://cnap-hsph-resources/grch38.95/other-resources/vep_cache.grch38.95.tar"
     },
@@ -30,6 +32,8 @@
         "dbsnp_index": "gs://cnap-hsph-resources/grch37.95/other-resources/dbsnp_138.GRCh37.vcf.gz.tbi",
         "known_indels": "gs://cnap-hsph-resources/grch37.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh37.vcf.gz",
         "known_indels_index": "gs://cnap-hsph-resources/grch37.95/other-resources/Mills_and_1000G_gold_standard.indels.GRCh37.vcf.gz.tbi",
+        "gnomad": "gs://cnap-hsph-resources/grch37.95/other-resources/",
+        "gnomad_index": "gs://cnap-hsph-resources/grch37.95/other-resources/",
         "vep_species": "homo_sapiens",
         "vep_cache_tar": "gs://cnap-hsph-resources/grch37.95/other-resources/vep_cache.grch37.95.tar"
     }

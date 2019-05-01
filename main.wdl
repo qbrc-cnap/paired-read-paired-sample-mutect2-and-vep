@@ -1,4 +1,4 @@
-import "single_sample_haplotypecaller.wdl" as single_sample_haplotypecaller
+import "paired_sample_mutect2.wdl" as paired_sample_mutect2
 import "fastqc.wdl" as fastqc
 import "report.wdl" as reporting
 
@@ -13,7 +13,7 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     Array[Array[File]] matched_samples = read_tsv(match_samples.output_annotations)
     Boolean use_dedup
 
-    Array[Pair[File, File]] fastq_pairs = zip(r1_files, r2_files)
+    #Array[Pair[File, File]] fastq_pairs = zip(r1_files, r2_files)
     
     # Reference files
     File ref_fasta
@@ -31,9 +31,13 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     File known_indels
     File known_indels_index
 
-    # Inputs for HaplotypeCaller scatter
+    # Inputs for HaplotypeCaller and Mutect2 scatter
     File contig_list
     Array[String] contigs = read_lines(contig_list)
+
+    # Inputs for GATK Mutect2
+    File gnomad
+    File gnomad_index
 
     # Inputs for VEP
     String vep_species
@@ -45,21 +49,33 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     String git_repo_url
     String git_commit_hash
 
-    scatter(item in fastq_pairs){
-        call fastqc.run_fastqc as fastqc_for_read1 {
+    scatter(item in matched_samples){
+        call fastqc.run_fastqc as fastqc_for_tumor_read1 {
             input:
-                fastq = item.left
+                fastq = item[0]
         }
         
-        call fastqc.run_fastqc as fastqc_for_read2 {
+        call fastqc.run_fastqc as fastqc_for_tumor_read2 {
             input:
-                fastq = item.right
+                fastq = item[1]
         }
 
-        call single_sample_haplotypecaller.SingleSampleHaplotypecallerWorkflow as single_sample_process {
+        call fastqc.run_fastqc as fastqc_for_normal_read1 {
             input:
-                r1_fastq = item.left,
-                r2_fastq = item.right,
+                fastq = item[2]
+        }
+        
+        call fastqc.run_fastqc as fastqc_for_normal_read2 {
+            input:
+                fastq = item[3]
+        }
+
+        call paired_sample_mutect2.PairedSampleMutect2Workflow as paired_sample_process {
+            input:
+                tumor_r1_fastq = item[0],
+                tumor_r2_fastq = item[1],
+                normal_r1_fastq = item[2],
+                normal_r2_fastq = item[3],
                 use_dedup = use_dedup,
                 ref_fasta = ref_fasta,
                 ref_fasta_index = ref_fasta_index,
@@ -73,6 +89,8 @@ workflow PairedMatchedMutect2AndVepWorkflow {
                 dbsnp_index = dbsnp_index,
                 known_indels = known_indels,
                 known_indels_index = known_indels_index,
+                gnomad = gnomad,
+                gonamd_index = gnomad_index,
                 vep_cache_tar = vep_cache_tar,
                 vep_species = vep_species,
                 contigs = contigs
@@ -81,8 +99,8 @@ workflow PairedMatchedMutect2AndVepWorkflow {
 
     call reporting.create_multi_qc as multiqc {
         input:
-            alignment_metrics = single_sample_process.alignment_metrics,
-            dedup_metrics = single_sample_process.deduplication_metrics,
+            alignment_metrics = paired_sample_process.alignment_metrics,
+            dedup_metrics = paired_sample_process.deduplication_metrics,
             r1_fastqc_zips = fastqc_for_read1.fastqc_zip,
             r2_fastqc_zips = fastqc_for_read2.fastqc_zip
     }
@@ -100,9 +118,9 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     call zip_results {
         input:
             zip_name = output_zip_name,
-            vcf_files = single_sample_process.vcf,
-            tsv_files = single_sample_process.annotated_vcf,
-            vep_stats_files = single_sample_process.annotated_vcf_stats,
+            vcf_files = paired_sample_process.vcf,
+            tsv_files = paired_sample_process.annotated_vcf,
+            vep_stats_files = paired_sample_process.annotated_vcf_stats,
             multiqc_results = multiqc.report,
             analysis_report = generate_report.report
     }

@@ -21,5 +21,7 @@
   "PairedMatchedMutect2AndVepWorkflow.git_repo_url": "String",
   "PairedMatchedMutect2AndVepWorkflow.ref_fasta_index": "File",
   "PairedMatchedMutect2AndVepWorkflow.ref_sa": "File",
-  "PairedMatchedMutect2AndVepWorkflow.ref_pac": "File"
+  "PairedMatchedMutect2AndVepWorkflow.ref_pac": "File",
+  "PairedMatchedMutect2AndVepWorkflow.gnomad": "File",
+  "PairedMatchedMutect2AndVepWorkflow.gnomad_index": "File"
 }
