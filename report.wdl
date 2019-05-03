@@ -1,15 +1,23 @@
 workflow test_qc {
-    Array[File] alignment_metrics
-    Array[File] dedup_metrics
-    Array[File] r1_fastqc_zips
-    Array[File] r2_fastqc_zips
+    Array[File] tumor_alignment_metrics
+    Array[File] tumor_dedup_metrics
+    Array[File] tumor_r1_fastqc_zips
+    Array[File] tumor_r2_fastqc_zips
+    Array[File] normal_alignment_metrics
+    Array[File] normal_dedup_metrics
+    Array[File] normal_r1_fastqc_zips
+    Array[File] normal_r2_fastqc_zips
 
     call create_multi_qc{
         input:
-            alignment_metrics = alignment_metrics,
-            dedup_metrics = dedup_metrics,
-            r1_fastqc_zips = r1_fastqc_zips,
-            r2_fastqc_zips = r2_fastqc_zips
+            tumor_alignment_metrics = tumor_alignment_metrics,
+            tumor_dedup_metrics = tumor_dedup_metrics,
+            normal_alignment_metrics = normal_alignment_metrics,
+            normal_dedup_metrics = normal_dedup_metrics,
+            tumor_r1_fastqc_zips = tumor_r1_fastqc_zip,
+            tumor_r2_fastqc_zips = tumor_r2_fastqc_zip,
+            normal_r1_fastqc_zips = normal_r1_fastqc_zip,
+            normal_r2_fastqc_zips = normal_r2_fastqc_zip
     }
 
     output {
@@ -18,10 +26,14 @@ workflow test_qc {
 }
 
 task create_multi_qc {
-    Array[File] alignment_metrics
-    Array[File] dedup_metrics
-    Array[File] r1_fastqc_zips
-    Array[File] r2_fastqc_zips
+    Array[File] tumor_alignment_metrics
+    Array[File] tumor_dedup_metrics
+    Array[File] tumor_r1_fastqc_zips
+    Array[File] tumor_r2_fastqc_zips
+    Array[File] normal_alignment_metrics
+    Array[File] normal_dedup_metrics
+    Array[File] normal_r1_fastqc_zips
+    Array[File] normal_r2_fastqc_zips
 
     # Runtime parameters
     Int disk_size = 100

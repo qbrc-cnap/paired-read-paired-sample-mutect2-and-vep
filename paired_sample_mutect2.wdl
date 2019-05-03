@@ -107,8 +107,8 @@ workflow PairedSampleMutect2Workflow {
 
     call gatk_tools.base_recalibrator as normal_base_recal {
         input:
-            input_bam = alignment.sorted_bam,
-            input_bam_index = alignment.sorted_bam_index,
+            input_bam = normal_alignment.sorted_bam,
+            input_bam_index = normal_alignment.sorted_bam_index,
             sample_name = normal_sample_name,
             dbsnp = dbsnp,
             dbsnp_index = dbsnp_index,
@@ -120,12 +120,23 @@ workflow PairedSampleMutect2Workflow {
     }
 
     # Applys the recalibration of reads to the BAM
-    call gatk_tools.apply_recalibration as apply_recal {
+    call gatk_tools.apply_recalibration as tumor_apply_recal {
         input:
-            input_bam = alignment.sorted_bam,
-            input_bam_index = alignment.sorted_bam_index,
-            recalibration_report = base_recal.recalibration_report,
-            sample_name = sample_name,
+            input_bam = tumor_alignment.sorted_bam,
+            input_bam_index = tumor_alignment.sorted_bam_index,
+            recalibration_report = tumor_base_recal.recalibration_report,
+            sample_name = tumor_sample_name,
+            ref_fasta = ref_fasta,
+            ref_fasta_index = ref_fasta_index,
+            ref_dict = ref_dict
+    }
+
+    call gatk_tools.apply_recalibration as normal_apply_recal {
+        input:
+            input_bam = normal_alignment.sorted_bam,
+            input_bam_index = normal_alignment.sorted_bam_index,
+            recalibration_report = normal_base_recal.recalibration_report,
+            sample_name = normal_sample_name,
             ref_fasta = ref_fasta,
             ref_fasta_index = ref_fasta_index,
             ref_dict = ref_dict
@@ -174,7 +185,7 @@ workflow PairedSampleMutect2Workflow {
     # Merges the scattered VCFs together
     call gatk_tools.merge_vcf as merge_vcf {
         input:
-            input_vcfs = haplotypecaller.output_vcf,
+            input_vcfs = mutect.output_vcf,
             sample_name = sample_name,
             ref_dict = ref_dict,
             ref_fasta = ref_fasta,
@@ -194,7 +205,9 @@ workflow PairedSampleMutect2Workflow {
         File vcf = merge_vcf.output_vcf
         File annotated_vcf = vep_annotate.output_vcf
         File annotated_vcf_stats = vep_annotate.vcf_stats
-        File deduplication_metrics = dedup_bam.deduplication_metrics
-        File alignment_metrics = aln_metrics.alignment_metrics
+        File tumor_deduplication_metrics = tumor_dedup_bam.deduplication_metrics
+        File normal_deduplication_metrics = normal_dedup_bam.deduplication_metrics
+        File tumor_alignment_metrics = tumor_aln_metrics.alignment_metrics
+        File normal_alignment_metrics = normal_aln_metrics.alignment_metrics
     }
 }

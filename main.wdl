@@ -10,7 +10,7 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     Array[File] r1_files
     Array[File] r2_files
     File match_annotations
-    Array[Array[File]] matched_samples = read_tsv(match_samples.output_annotations)
+    Array[Array[File]] matched_samples = read_tsv(match_samples_to_tsv.output_annotations)
     Boolean use_dedup
 
     #Array[Pair[File, File]] fastq_pairs = zip(r1_files, r2_files)
@@ -48,6 +48,13 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     String genome
     String git_repo_url
     String git_commit_hash
+
+    call match_samples as match_samples_to_tsv {
+        input:
+            r1_fastq = r1_files,
+            r2_fastq = r2_files,
+            match_annotations = match_annotations
+    }
 
     scatter(item in matched_samples){
         call fastqc.run_fastqc as fastqc_for_tumor_read1 {
@@ -90,7 +97,7 @@ workflow PairedMatchedMutect2AndVepWorkflow {
                 known_indels = known_indels,
                 known_indels_index = known_indels_index,
                 gnomad = gnomad,
-                gonamd_index = gnomad_index,
+                gnomad_index = gnomad_index,
                 vep_cache_tar = vep_cache_tar,
                 vep_species = vep_species,
                 contigs = contigs
@@ -99,10 +106,14 @@ workflow PairedMatchedMutect2AndVepWorkflow {
 
     call reporting.create_multi_qc as multiqc {
         input:
-            alignment_metrics = paired_sample_process.alignment_metrics,
-            dedup_metrics = paired_sample_process.deduplication_metrics,
-            r1_fastqc_zips = fastqc_for_read1.fastqc_zip,
-            r2_fastqc_zips = fastqc_for_read2.fastqc_zip
+            tumor_alignment_metrics = paired_sample_process.tumor_alignment_metrics,
+            tumor_dedup_metrics = paired_sample_process.tumor_deduplication_metrics,
+            normal_alignment_metrics = paired_sample_process.normal_alignment_metrics,
+            normal_dedup_metrics = paired_sample_process.normal_deduplication_metrics,
+            tumor_r1_fastqc_zips = fastqc_for_tumor_read1.fastqc_zip,
+            tumor_r2_fastqc_zips = fastqc_for_tumor_read2.fastqc_zip,
+            normal_r1_fastqc_zips = fastqc_for_normal_read1.fastqc_zip,
+            normal_r2_fastqc_zips = fastqc_for_normal_read2.fastqc_zip
     }
 
     call reporting.generate_report as generate_report {

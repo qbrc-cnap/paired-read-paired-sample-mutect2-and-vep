@@ -326,7 +326,7 @@ task mutect {
     }
 
     output {
-        File output_vcf = "${sample_name}.vcf"
+        File output_vcf = "${tumor_sample_name}.vcf"
     }
 
     runtime {
