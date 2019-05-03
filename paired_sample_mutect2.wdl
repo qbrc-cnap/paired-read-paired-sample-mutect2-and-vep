@@ -143,14 +143,14 @@ workflow PairedSampleMutect2Workflow {
     }
 
     # Deduplicate the BAM file
-    call gatk_tools.deduplicate_bam as tumor_dedup_bam {
+    call gatk_tools.deduplicate_bam as tumor_deduplicate_bam {
         input:
             input_bam = tumor_apply_recal.recalibrated_bam,
             input_bam_index = tumor_apply_recal.recalibrated_bam_index,
             sample_name = tumor_sample_name
     }
 
-    call gatk_tools.deduplicate_bam as normal_dedup_bam {
+    call gatk_tools.deduplicate_bam as normal_deduplicate_bam {
         input:
             input_bam = normal_apply_recal.recalibrated_bam,
             input_bam_index = normal_apply_recal.recalibrated_bam_index,
@@ -164,12 +164,12 @@ workflow PairedSampleMutect2Workflow {
             input:
                 tumor_bam = tumor_apply_recal.recalibrated_bam,
                 tumor_bam_index = tumor_apply_recal.recalibrated_bam_index,
-                tumor_dedup_bam = tumor_dedup_bam.sorted_bam,
-                tumor_dedup_bam_index = tumor_dedup_bam.sorted_bam_index,
+                tumor_dedup_bam = tumor_deduplicate_bam.sorted_bam,
+                tumor_dedup_bam_index = tumor_deduplicate_bam.sorted_bam_index,
                 normal_bam = normal_apply_recal.recalibrated_bam,
                 normal_bam_index = normal_apply_recal.recalibrated_bam_index,
-                normal_dedup_bam = normal_dedup_bam.sorted_bam,
-                normal_dedup_bam_index = normal_dedup_bam.sorted_bam_index,
+                normal_dedup_bam = normal_deduplicate_bam.sorted_bam,
+                normal_dedup_bam_index = normal_deduplicate_bam.sorted_bam_index,
                 use_dedup = use_dedup,
                 interval = scatter_interval,
                 tumor_sample_name = tumor_sample_name,
@@ -186,7 +186,7 @@ workflow PairedSampleMutect2Workflow {
     call gatk_tools.merge_vcf as merge_vcf {
         input:
             input_vcfs = mutect.output_vcf,
-            sample_name = sample_name,
+            sample_name = tumor_sample_name,
             ref_dict = ref_dict,
             ref_fasta = ref_fasta,
             ref_fasta_index = ref_fasta_index
@@ -196,7 +196,7 @@ workflow PairedSampleMutect2Workflow {
     call vep.vep_annotate as vep_annotate {
         input:
             input_vcf = merge_vcf.output_vcf,
-            sample_name = sample_name,
+            sample_name = tumor_sample_name,
             species = vep_species,
             vep_cache_tar = vep_cache_tar
     }
@@ -205,8 +205,8 @@ workflow PairedSampleMutect2Workflow {
         File vcf = merge_vcf.output_vcf
         File annotated_vcf = vep_annotate.output_vcf
         File annotated_vcf_stats = vep_annotate.vcf_stats
-        File tumor_deduplication_metrics = tumor_dedup_bam.deduplication_metrics
-        File normal_deduplication_metrics = normal_dedup_bam.deduplication_metrics
+        File tumor_deduplication_metrics = tumor_deduplicate_bam.deduplication_metrics
+        File normal_deduplication_metrics = normal_deduplicate_bam.deduplication_metrics
         File tumor_alignment_metrics = tumor_aln_metrics.alignment_metrics
         File normal_alignment_metrics = normal_aln_metrics.alignment_metrics
     }
