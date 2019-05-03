@@ -141,9 +141,9 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     }
 
     meta {
-        workflow_title: "Germline exome variant calling"
-        workflow_short_description: "A pipline for variant calling and variant annotation from germline exome DNASeq"
-        workflow_long_description: "Use this workflow for aligning paired-end Illumina NGS reads with BWA, optional deduplication, base quality score recalibration with GATK, variant calling with GATK HaplotypeCaller, and variant annotation with Ensembl's VEP."
+        workflow_title: "Somatic exome variant calling"
+        workflow_short_description: "A pipline for variant calling and variant annotation from tumor / normal matched exome DNASeq libraries"
+        workflow_long_description: "Use this workflow for aligning matched tumor-normal paired-end Illumina NGS libraries with BWA, optional deduplication, base quality score recalibration with GATK, variant calling with GATK Mutect2, and variant annotation with Ensembl's VEP."
     }
 }
 
