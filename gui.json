@@ -2,7 +2,7 @@
 	"input_elements": [
 		{
 			"target": {
-				"target_ids": ["PairedMatchedMutect2AndVepWorkflow"],
+				"target_ids": ["PairedMatchedMutect2AndVepWorkflow.match_annotations"],
 				"name": "sample_pairs_input",
 				"handler": "single_file_input_mapping.py"
 			},
