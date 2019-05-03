@@ -2,7 +2,7 @@
 	"input_elements": [
 		{
 			"target": {
-				"target_ids": ["PairedMatchedMutect2AndVepWorkflow"],
+				"target_ids": ["PairedSampleMutect2Workflow"],
 				"name": "sample_pairs_input",
 				"handler": "single_file_input_mapping.py"
 			},
@@ -16,7 +16,7 @@
 		},
 		{
 			"target": {
-				"target_ids": ["PairedMatchedMutect2AndVepWorkflow.r1_files", "PairedMatchedMutect2AndVepWorkflow.r2_files"],
+				"target_ids": ["PairedSampleMutect2Workflow.r1_files", "PairedSampleMutect2Workflow.r2_files"],
 				"name": "input_files",
 				"handler": "input_mapping.py"
 			},
@@ -30,22 +30,22 @@
         },
 		{
 			"target": {
-				"target_ids": ["PairedMatchedMutect2AndVepWorkflow.genome", 
-					"PairedMatchedMutect2AndVepWorkflow.ref_fasta",
-					"PairedMatchedMutect2AndVepWorkflow.ref_fasta_index",
-					"PairedMatchedMutect2AndVepWorkflow.ref_dict",
-					"PairedMatchedMutect2AndVepWorkflow.ref_bwt",
-					"PairedMatchedMutect2AndVepWorkflow.ref_sa",
-					"PairedMatchedMutect2AndVepWorkflow.ref_amb",
-					"PairedMatchedMutect2AndVepWorkflow.ref_ann",
-					"PairedMatchedMutect2AndVepWorkflow.ref_pac",
-					"PairedMatchedMutect2AndVepWorkflow.dbsnp",
-					"PairedMatchedMutect2AndVepWorkflow.dbsnp_index",
-					"PairedMatchedMutect2AndVepWorkflow.known_indels",
-					"PairedMatchedMutect2AndVepWorkflow.known_indels_index",
-					"PairedMatchedMutect2AndVepWorkflow.contig_list",
-					"PairedMatchedMutect2AndVepWorkflow.vep_species",
-					"PairedMatchedMutect2AndVepWorkflow.vep_cache_tar"
+				"target_ids": ["PairedSampleMutect2Workflow.genome", 
+					"PairedSampleMutect2Workflow.ref_fasta",
+					"PairedSampleMutect2Workflow.ref_fasta_index",
+					"PairedSampleMutect2Workflow.ref_dict",
+					"PairedSampleMutect2Workflow.ref_bwt",
+					"PairedSampleMutect2Workflow.ref_sa",
+					"PairedSampleMutect2Workflow.ref_amb",
+					"PairedSampleMutect2Workflow.ref_ann",
+					"PairedSampleMutect2Workflow.ref_pac",
+					"PairedSampleMutect2Workflow.dbsnp",
+					"PairedSampleMutect2Workflow.dbsnp_index",
+					"PairedSampleMutect2Workflow.known_indels",
+					"PairedSampleMutect2Workflow.known_indels_index",
+					"PairedSampleMutect2Workflow.contig_list",
+					"PairedSampleMutect2Workflow.vep_species",
+					"PairedSampleMutect2Workflow.vep_cache_tar"
 				],
 				"name": "genome_choice",
 				"handler": "genome_mapper.py"
@@ -72,10 +72,10 @@
 				"label": "Use deduplicated FASTQ",
 				"description": "Please check for high diversity libraries, such as SureSelect. Lower diversity libraries, such as Haloplex, should not use deduplicted FASTQs."
 			},
-			"target": "PairedMatchedMutect2AndVepWorkflow.use_dedup"
+			"target": "PairedSampleMutect2Workflow.use_dedup"
 		},
 		{
-			"target":"PairedMatchedMutect2AndVepWorkflow.output_zip_name",
+			"target":"PairedSampleMutect2Workflow.output_zip_name",
 			"display_element": {
 				"type": "text",
 				"label": "Output zip-archive name:",
@@ -83,7 +83,7 @@
 			}
 		},
 		{
-			"target": "PairedMatchedMutect2AndVepWorkflow.git_repo_url",
+			"target": "PairedSampleMutect2Workflow.git_repo_url",
 			"display_element": {
 				"type": "dynamic_hidden",
 				"handler": "add_git_repo_url.py",
@@ -93,7 +93,7 @@
 			}
 		},
 		{
-			"target": "PairedMatchedMutect2AndVepWorkflow.git_commit_hash",
+			"target": "PairedSampleMutect2Workflow.git_commit_hash",
 			"display_element": {
 				"type": "dynamic_hidden",
 				"handler": "add_git_hash.py",
