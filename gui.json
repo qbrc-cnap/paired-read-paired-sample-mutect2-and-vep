@@ -43,6 +43,8 @@
 					"PairedMatchedMutect2AndVepWorkflow.dbsnp_index",
 					"PairedMatchedMutect2AndVepWorkflow.known_indels",
 					"PairedMatchedMutect2AndVepWorkflow.known_indels_index",
+					"PairedMatchedMutect2AndVepWorkflow.gnomad",
+					"PairedMatchedMutect2AndVepWorkflow.gnomad_index",
 					"PairedMatchedMutect2AndVepWorkflow.contig_list",
 					"PairedMatchedMutect2AndVepWorkflow.vep_species",
 					"PairedMatchedMutect2AndVepWorkflow.vep_cache_tar"

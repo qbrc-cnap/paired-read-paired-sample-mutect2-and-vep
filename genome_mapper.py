@@ -31,7 +31,9 @@ def map_inputs(user, unmapped_data, id_list):
     d[id_list[10]] = j[genome_choice]['dbsnp_index']
     d[id_list[11]] = j[genome_choice]['known_indels']
     d[id_list[12]] = j[genome_choice]['known_indels_index']
-    d[id_list[13]] = j[genome_choice]['contig_list']
-    d[id_list[14]] = j[genome_choice]['vep_species']
-    d[id_list[15]] = j[genome_choice]['vep_cache_tar']
+    d[id_list[13]] = j[genome_choice]['gnomad']
+    d[id_list[14]] = j[genome_choice]['gnomad_index']
+    d[id_list[15]] = j[genome_choice]['contig_list']
+    d[id_list[16]] = j[genome_choice]['vep_species']
+    d[id_list[17]] = j[genome_choice]['vep_cache_tar']
     return d
