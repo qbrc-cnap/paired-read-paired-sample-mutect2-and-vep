@@ -160,7 +160,7 @@ task match_samples {
             /usr/local/bin/match_annotations.py \
             -r1 ${sep=" " r1_fastq} \
             -r2 ${sep=" " r2_fastq} \
-            -annot match_annotations \
+            -annot ${match_annotations} \
         > matched_annotations.tsv;
     }
 
