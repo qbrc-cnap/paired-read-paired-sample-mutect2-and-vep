@@ -1,4 +1,4 @@
-workflow PairedHaplotypecallerAndVepWorkflow {
+workflow PairedMatchedMutect2AndVepWorkflow {
     # This workflow is a 'super' workflow that parallelizes
     # HaplotypeCaller and VEP analysis over multiple samples.
 
@@ -23,6 +23,8 @@ workflow PairedHaplotypecallerAndVepWorkflow {
     File dbsnp_index
     File known_indels
     File known_indels_index
+    File gnomad
+    File gnomad_index
 
     # Inputs for HaplotypeCaller scatter
     File contig_list
