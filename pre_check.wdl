@@ -89,7 +89,7 @@ task assert_valid_annotation {
         python3 /opt/software/precheck/check_annotations.py \
             -r1 ${sep=" " r1_files} \
             -r2 ${sep=" " r2_files} \
-            ${match_annotations}
+            -annot ${match_annotations}
     >>>
 
     runtime {
