@@ -198,7 +198,8 @@ workflow PairedSampleMutect2Workflow {
             input_vcf = merge_vcf.output_vcf,
             sample_name = tumor_sample_name,
             species = vep_species,
-            vep_cache_tar = vep_cache_tar
+            vep_cache_tar = vep_cache_tar,
+            is_vcf_empty = merge_vcf.is_vcf_empty
     }
 
     output {

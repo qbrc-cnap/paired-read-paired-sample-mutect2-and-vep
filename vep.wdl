@@ -23,23 +23,31 @@ task vep_annotate {
     String sample_name
     String species
     File vep_cache_tar
+    File is_vcf_empty
 
     # runtime commands
     Int disk_size = 200
 
     command {
-        tar xf ${vep_cache_tar};
-        #working_dir=$(pwd)
-        /opt/vep/src/ensembl-vep/vep \
-            -i ${input_vcf} \
-            -o ${sample_name}.vep.tsv \
-            --stats_file ${sample_name}.vep_stats.html \
-            --species ${species} \
-            --dir ./vep_data \
-            --tab \
-            --cache \
-            --offline \
-            --everything;
+        is_empty=$(cat ${is_vcf_empty})
+        if [ ${is_empty} -eq 0 ]
+        then
+            echo "The Mutect2 VCF output was empty, so VEP would fail if applied to it. No annotated VCF can be provided then." > ${sample_name}.vep.tsv;
+            echo ""The Mutect2 VCF output was empty, so VEP would fail if applied to it. No annotated VCF can be provided then." > ${sample_name}.vep_stats.html;
+        else
+            tar xf ${vep_cache_tar};
+            #working_dir=$(pwd)
+            /opt/vep/src/ensembl-vep/vep \
+                -i ${input_vcf} \
+                -o ${sample_name}.vep.tsv \
+                --stats_file ${sample_name}.vep_stats.html \
+                --species ${species} \
+                --dir ./vep_data \
+                --tab \
+                --cache \
+                --offline \
+                --everything;
+        fi
     }
 
     output {

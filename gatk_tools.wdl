@@ -352,11 +352,13 @@ task merge_vcf {
         java -Xmx3000m -jar $PICARD_JAR \
             MergeVcfs \
             INPUT=${sep=' INPUT=' input_vcfs} \
-            OUTPUT=${sample_name}.vcf
+            OUTPUT=${sample_name}.vcf;
+        grep -v "^#" ${sample_name}.vcf > is_vcf_empty.txt
     }
 
     output {
         File output_vcf = "${sample_name}.vcf"
+        File is_vcf_empty = "is_vcf_empty.txt"
     }
 
     runtime {
