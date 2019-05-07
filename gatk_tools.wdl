@@ -308,7 +308,7 @@ task mutect {
                 -tumor ${tumor_sample_name} \
                 -I ${normal_dedup_bam} \
                 -normal ${normal_sample_name} \
-                --germline_resource ${gnomad} \
+                --germline-resource ${gnomad} \
                 -L ${interval} \
                 -O ${tumor_sample_name}.vcf;
         else
@@ -319,7 +319,7 @@ task mutect {
                 -tumor ${tumor_sample_name} \
                 -I ${normal_bam} \
                 -normal ${normal_sample_name} \
-                --germline_resource ${gnomad} \
+                --germline-resource ${gnomad} \
                 -L ${interval} \
                 -O ${tumor_sample_name}.vcf;
         fi
