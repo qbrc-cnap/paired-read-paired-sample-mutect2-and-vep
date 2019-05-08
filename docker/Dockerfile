@@ -15,7 +15,9 @@ RUN apt-get update && \
     python3-pip \
     openjdk-8-jdk \
     pandoc \
-    git
+    git \
+    python \
+    pyton-pip
 
 # Install all software under /opt/software:
 RUN mkdir -p /opt/software 
@@ -74,6 +76,23 @@ ENV GATK_JAR=/opt/software/gatk/gatk-4.1.1.0/gatk-package-4.1.1.0-local.jar
 # Install some Python3 libraries:
 ADD requirements.txt /opt/software/
 RUN pip3 install -r /opt/software/requirements.txt
+
+# Install some Python2.7 libraries (just for conPair):
+ADD requirements_27.txt /opt/software/
+RUN pip install -r /opt/software/requirements_27.txt
+
+# Install ConPair
+RUN cd /opt/software/ && \
+  wget -O conpair_v0.2.tar.gz https://github.com/nygenome/Conpair/archive/v0.2.tar.gz && \
+  tar xzvf conpair_v0.2.tar.gz
+ADD GenomeAnalysisTK-3.8-1-0-gf15c1c3ef.tar.bz2 /opt/software
+RUN cd /opt/software/ && \
+  tar xjvf GenomeAnalysisTK-3.8-1-0-gf15c1c3ef.tar.bz2;
+  # Make sure to manually point to GATK jar in script invocation of 
+  # run_gatk_pileup_for_sample.py in ConPair
+  # /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+ENV CONPAIR_DIR=/opt/software/Conpair-0.2
+ENV PYTHONPATH=${PYTHONPATH}:/opt/software/Conpair-0.2/modules
 
 # Install multiqc:
 RUN pip3 install multiqc
