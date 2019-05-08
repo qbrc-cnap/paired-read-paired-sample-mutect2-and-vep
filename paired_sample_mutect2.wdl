@@ -184,11 +184,17 @@ workflow PairedSampleMutect2Workflow {
     }
 
     call gatk_tools.conpair_concordance as conpair_concordance {
-
+        input:
+            tumor_pileup = conpair_tumor_pileup.output_pileup,
+            normal_pileup = conpair_normal_pileup.output_pileup,
+            sample_name = tumor_sample_name
     }
 
     call gatk_tools.conpair_contamination as conpair_contamination {
-
+        input:
+            tumor_pileup = conpair_tumor_pileup.output_pileup,
+            normal_pileup = conpair_normal_pileup.output_pileup,
+            sample_name = tumor_sample_name
     }
 
     # Scatters over the contig intervals
