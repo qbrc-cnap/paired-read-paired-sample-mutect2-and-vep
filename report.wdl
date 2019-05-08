@@ -34,6 +34,8 @@ task create_multi_qc {
     Array[File] normal_dedup_metrics
     Array[File] normal_r1_fastqc_zips
     Array[File] normal_r2_fastqc_zips
+    Array[File] concordance_metrics
+    Array[File] contamination_metrics
 
     # Runtime parameters
     Int disk_size = 100

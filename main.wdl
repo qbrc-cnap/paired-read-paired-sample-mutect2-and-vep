@@ -113,7 +113,9 @@ workflow PairedMatchedMutect2AndVepWorkflow {
             tumor_r1_fastqc_zips = fastqc_for_tumor_read1.fastqc_zip,
             tumor_r2_fastqc_zips = fastqc_for_tumor_read2.fastqc_zip,
             normal_r1_fastqc_zips = fastqc_for_normal_read1.fastqc_zip,
-            normal_r2_fastqc_zips = fastqc_for_normal_read2.fastqc_zip
+            normal_r2_fastqc_zips = fastqc_for_normal_read2.fastqc_zip,
+            concordance_metrics = paired_sample_process.concordance_metrics,
+            contamination_metrics = paired_sample_process.contamination_metrics
     }
 
     call reporting.generate_report as generate_report {

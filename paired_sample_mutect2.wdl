@@ -157,6 +157,40 @@ workflow PairedSampleMutect2Workflow {
             sample_name = normal_sample_name
     }
 
+    call gatk_tools.conpair_pileup as conpair_tumor_pileup {
+        input:
+            input_bam = tumor_apply_recal.recalibrated_bam,
+            input_bam_index = tumor_apply_recal.recalibrated_bam_index,
+            input_dedup_bam = tumor_deduplicate_bam.sorted_bam,
+            input_dedup_bam_index = tumor_deduplicate_bam.sorted_bam_index,
+            use_dedup = use_dedup,
+            sample_name = tumor_sample_name,
+            ref_dict = ref_dict,
+            ref_fasta = ref_fasta,
+            ref_fasta_index = ref_fasta_index
+    }
+
+    call gatk_tools.conpair_pileup as conpair_normal_pileup {
+        input:
+            input_bam = normal_apply_recal.recalibrated_bam,
+            input_bam_index = normal_apply_recal.recalibrated_bam_index,
+            input_dedup_bam = normal_deduplicate_bam.sorted_bam,
+            input_dedup_bam_index = normal_deduplicate_bam.sorted_bam_index,
+            use_dedup = use_dedup,
+            sample_name = normal_sample_name,
+            ref_dict = ref_dict,
+            ref_fasta = ref_fasta,
+            ref_fasta_index = ref_fasta_index
+    }
+
+    call gatk_tools.conpair_concordance as conpair_concordance {
+
+    }
+
+    call gatk_tools.conpair_contamination as conpair_contamination {
+
+    }
+
     # Scatters over the contig intervals
     scatter (scatter_interval in contigs) {
         # Identifies variants with GATK's HaplotypeCaller
@@ -210,5 +244,7 @@ workflow PairedSampleMutect2Workflow {
         File normal_deduplication_metrics = normal_deduplicate_bam.deduplication_metrics
         File tumor_alignment_metrics = tumor_aln_metrics.alignment_metrics
         File normal_alignment_metrics = normal_aln_metrics.alignment_metrics
+        File concordance_metrics = conpair_concordance.concordance_metrics
+        File contaminiation_metrics = conpair_contamination.contaminiation_metrics
     }
 }

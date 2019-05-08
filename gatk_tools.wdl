@@ -229,6 +229,105 @@ task apply_recalibration {
     }
 }
 
+task conpair_pileup {
+    File input_bam
+    File input_bam_index
+    File input_dedup_bam
+    File input_dedup_bam_index
+    String use_dedup
+    String sample_name
+    File ref_fasta
+    File ref_fasta_index
+    File ref_dict
+
+    Int disk_size = 250
+
+    command {
+        if [ "${use_dedup}" = "true" ]
+        then
+            /opt/software/Conpair-0.2/scripts/run_gatk_pileup_for_sample.py \
+                -B ${input_dedup_bam} \
+                -O ${sample_name}.pileup \
+                --reference ${ref_fasta} \
+                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+        else
+            /opt/software/Conpair-0.2/scripts/run_gatk_pileup_for_sample.py \
+                -B ${input_bam} \
+                -O ${sample_name}.pileup \
+                --reference ${ref_fasta} \
+                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+        fi
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
+        cpu: 4
+        memory: "16 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+
+    output {
+        File output_pileup = "${sample_name}.pileup"
+    }
+}
+
+task conpair_concordance {
+    File tumor_pileup
+    File normal_pileup
+    String sample_name
+    
+    # runtime commands
+    Int disk_size = 250
+
+    command {
+        /opt/software/Conpair-0.2/scripts/verify_concordance.py \
+            -T ${tumor_pileup} \
+            -N ${normal_pileup} \
+            --outfile ${sample_name}.concordance_metrics.txt;
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
+        cpu: 2
+        memory: "8 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+
+    output {
+        File concordance_metrics = "${sample_name}.concordance_metrics.txt"
+    }
+}
+
+task conpair_contamination {
+    File tumor_pileup
+    File normal_pileup
+    String sample_name
+    
+    # runtime commands
+    Int disk_size = 250
+
+    command {
+        /opt/software/Conpair-0.2/scripts/estimate_tumor_normal_contamination.py \
+            -T ${tumor_pileup} \
+            -N ${normal_pileup} \
+            --outfile ${sample_name}.contamination_metrics.txt;
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
+        cpu: 2
+        memory: "8 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+
+    output {
+        File contamination_metrics = "${sample_name}.contamination_metrics.txt"
+    }
+}
+
 task haplotypecaller {
     File input_bam
     File input_bam_index
