@@ -17,7 +17,8 @@ RUN apt-get update && \
     pandoc \
     git \
     python \
-    pyton-pip
+    pyton-pip \
+    r-base
 
 # Install all software under /opt/software:
 RUN mkdir -p /opt/software 

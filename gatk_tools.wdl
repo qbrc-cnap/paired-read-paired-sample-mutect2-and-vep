@@ -328,6 +328,51 @@ task conpair_contamination {
     }
 }
 
+task coverage_metrics {
+    File input_bam
+    File input_bam_index
+    File input_dedup_bam
+    File input_dedup_bam_index
+    String use_dedup
+    String sample_name
+    File ref_fasta
+    File ref_fasta_index
+    File ref_dict
+
+    Int disk_size = 250
+
+    command {
+        if [ "${use_dedup}" = "true" ]
+        then
+            java -jar -Xmx6000m -jar $GATK_JAR \
+                CollectWgsMetricsWithNonZeroCoverage \
+                R=${ref_fasta} \
+                I=${input_dedup_bam} \
+                O=${sample_name}.coverage_metrics.txt \
+                CHART=${sample_name}.coverage_histogram.pdf;
+        else
+            java -jar -Xmx6000m -jar $GATK_JAR \
+                CollectWgsMetricsWithNonZeroCoverage \
+                R=${ref_fasta} \
+                I=${input_bam} \
+                O=${sample_name}.coverage_metrics.txt \
+                CHART=${sample_name}.coverage_histogram.pdf;
+        fi
+    }
+
+    runtime {
+        docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
+        cpu: 2
+        memory: "8 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+
+    output {
+        File coverage_metrics = "${sample_name}.coverage_metrics.txt"
+    }
+}
+
 task haplotypecaller {
     File input_bam
     File input_bam_index
