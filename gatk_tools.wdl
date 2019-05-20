@@ -475,7 +475,7 @@ task mutect {
 
     runtime {
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
-        cpu: 8
+        cpu: 4
         memory: "12 G"
         disks: "local-disk " + disk_size + " HDD"
         preemptible: 0
