@@ -87,8 +87,9 @@ RUN cd /opt/software/ && \
   wget -O conpair_v0.2.tar.gz https://github.com/nygenome/Conpair/archive/v0.2.tar.gz && \
   tar xzvf conpair_v0.2.tar.gz
 ADD GenomeAnalysisTK-3.8-1-0-gf15c1c3ef.tar.bz2 /opt/software
-RUN cd /opt/software/ && \
-  tar xjvf GenomeAnalysisTK-3.8-1-0-gf15c1c3ef.tar.bz2;
+#RUN ls /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef
+#RUN cd /opt/software/ && \
+#  tar xjvf GenomeAnalysisTK-3.8-1-0-gf15c1c3ef.tar.bz2;
   # Make sure to manually point to GATK jar in script invocation of 
   # run_gatk_pileup_for_sample.py in ConPair
   # /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
