@@ -344,14 +344,14 @@ task coverage_metrics {
     command {
         if [ "${use_dedup}" = "true" ]
         then
-            java -jar -Xmx6000m -jar $GATK_JAR \
+            java -jar -Xmx6000m -jar $PICARD_JAR \
                 CollectWgsMetricsWithNonZeroCoverage \
                 R=${ref_fasta} \
                 I=${input_dedup_bam} \
                 O=${sample_name}.coverage_metrics.txt \
                 CHART=${sample_name}.coverage_histogram.pdf;
         else
-            java -jar -Xmx6000m -jar $GATK_JAR \
+            java -jar -Xmx6000m -jar $PICARD_JAR \
                 CollectWgsMetricsWithNonZeroCoverage \
                 R=${ref_fasta} \
                 I=${input_bam} \
