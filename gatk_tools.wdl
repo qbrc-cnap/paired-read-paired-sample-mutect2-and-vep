@@ -111,6 +111,7 @@ task run_alignment_metrics {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "4 G"
@@ -147,6 +148,7 @@ task deduplicate_bam {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "4 G"
@@ -185,6 +187,7 @@ task base_recalibrator {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 4
         memory: "6 G"
@@ -221,6 +224,7 @@ task apply_recalibration {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 4
         memory: "6 G"
@@ -260,6 +264,7 @@ task conpair_pileup {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 4
         memory: "16 G"
@@ -288,6 +293,7 @@ task conpair_concordance {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "8 G"
@@ -316,6 +322,7 @@ task conpair_contamination {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "8 G"
@@ -361,6 +368,7 @@ task coverage_metrics {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "8 G"
@@ -412,6 +420,7 @@ task haplotypecaller {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 8
         memory: "12 G"
@@ -474,6 +483,7 @@ task mutect {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 4
         memory: "12 G"
@@ -506,6 +516,7 @@ task merge_vcf {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "4 G"

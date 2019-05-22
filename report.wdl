@@ -49,6 +49,7 @@ task create_multi_qc {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "4 G"
@@ -95,6 +96,7 @@ task generate_report {
     }
 
     runtime {
+        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "6 G"
