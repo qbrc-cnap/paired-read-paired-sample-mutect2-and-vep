@@ -22,6 +22,7 @@ workflow PairedSampleMutect2Workflow {
     File ref_amb
     File ref_ann
     File ref_pac
+    File ref_exon_intervals
     File dbsnp
     File dbsnp_index
     File known_indels
@@ -207,7 +208,8 @@ workflow PairedSampleMutect2Workflow {
             sample_name = tumor_sample_name,
             ref_dict = ref_dict,
             ref_fasta = ref_fasta,
-            ref_fasta_index = ref_fasta_index
+            ref_fasta_index = ref_fasta_index,
+            ref_exon_intervals = ref_exon_intervals
     }
 
     call gatk_tools.coverage_metrics as normal_coverage {
@@ -220,7 +222,8 @@ workflow PairedSampleMutect2Workflow {
             sample_name = normal_sample_name,
             ref_dict = ref_dict,
             ref_fasta = ref_fasta,
-            ref_fasta_index = ref_fasta_index
+            ref_fasta_index = ref_fasta_index,
+            ref_exon_intervals = ref_exon_intervals
     }
 
     # Scatters over the contig intervals

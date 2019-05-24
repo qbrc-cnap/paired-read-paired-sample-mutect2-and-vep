@@ -39,6 +39,7 @@
 					"PairedMatchedMutect2AndVepWorkflow.ref_amb",
 					"PairedMatchedMutect2AndVepWorkflow.ref_ann",
 					"PairedMatchedMutect2AndVepWorkflow.ref_pac",
+					"PairedMatchedMutect2AndVepWorkflow.ref_exon_intervals",
 					"PairedMatchedMutect2AndVepWorkflow.dbsnp",
 					"PairedMatchedMutect2AndVepWorkflow.dbsnp_index",
 					"PairedMatchedMutect2AndVepWorkflow.known_indels",

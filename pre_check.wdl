@@ -17,6 +17,7 @@ workflow PairedMatchedMutect2AndVepWorkflow {
     File ref_amb
     File ref_ann
     File ref_pac
+    File ref_exon_intervals
 
     # Inputs for GATK BQSR
     File dbsnp

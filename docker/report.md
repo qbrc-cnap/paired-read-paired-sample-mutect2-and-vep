@@ -21,6 +21,8 @@ The main results are contained in a zip-archive and should be downloaded an "unz
         - QC of the FASTQ themselves with FASTQC: <https://www.bioinformatics.babraham.ac.uk/projects/fastqc/>
         - QC of the read alignment with Picard: <https://broadinstitute.github.io/picard/>
         - QC of the read duplication content of the libraries with Picard: <https://broadinstitute.github.io/picard/>
+        - QC of the per-base depth coverage of the exons
+            - exons are defined Ensembl's gff3 exon regions
         - QC of the base quality score recalibration as determined by GATK: <https://software.broadinstitute.org/gatk/>
 - **Annotated TSV**
     - This directory contains all the individual annotated tab delimited variant files produced by the annotation of the VCF with Ensembl's VEP.

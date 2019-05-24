@@ -23,6 +23,7 @@
   "PairedMatchedMutect2AndVepWorkflow.ref_ann": "File",
   "PairedMatchedMutect2AndVepWorkflow.r1_files": "Array[File]",
   "PairedMatchedMutect2AndVepWorkflow.ref_dict": "File",
+  "PairedMatchedMutect2AndVepWorkflow.ref_exon_intervals": "File",
   "PairedMatchedMutect2AndVepWorkflow.dbsnp_index": "File"
 }
 

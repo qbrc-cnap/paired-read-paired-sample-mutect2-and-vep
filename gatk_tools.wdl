@@ -345,6 +345,7 @@ task coverage_metrics {
     File ref_fasta
     File ref_fasta_index
     File ref_dict
+    File ref_exon_intervals
 
     Int disk_size = 250
 
@@ -352,18 +353,20 @@ task coverage_metrics {
         if [ "${use_dedup}" = "true" ]
         then
             java -jar -Xmx6000m -jar $PICARD_JAR \
-                CollectWgsMetricsWithNonZeroCoverage \
+                CollectWgsMetrics \
                 R=${ref_fasta} \
                 I=${input_dedup_bam} \
+                INTERVALS=${ref_exon_intervals} \
                 O=${sample_name}.coverage_metrics.txt \
-                CHART=${sample_name}.coverage_histogram.pdf;
+                COVERAGE_CAP=500;
         else
             java -jar -Xmx6000m -jar $PICARD_JAR \
-                CollectWgsMetricsWithNonZeroCoverage \
+                CollectWgsMetrics \
                 R=${ref_fasta} \
                 I=${input_bam} \
+                INTERVALS=${ref_exon_intervals} \
                 O=${sample_name}.coverage_metrics.txt \
-                CHART=${sample_name}.coverage_histogram.pdf;
+                COVERAGE_CAP=500;
         fi
     }
 
