@@ -27,7 +27,7 @@ def check_constraints(implemented_constraint, inputs_json_path):
     constraint_value = implemented_constraint.analysisunitconstraint.value
 
     # finally we can check if the constraints are satisfied:
-    constraint_satisfied = (len(fastq_list) * 2) <= constraint_value
+    constraint_satisfied = len(fastq_list) <= (constraint_value * 2)
 
     message = ''
     if not constraint_satisfied:
