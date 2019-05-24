@@ -15,6 +15,7 @@ def check_constraints(implemented_constraint, inputs_json_path):
     j = json.load(open(inputs_json_path))
     try:
         fastq_list = j['PairedMatchedMutect2AndVepWorkflow.r1_files']
+        
     except KeyError:
         # The chances of reaching this are very unlikely, but we are being extra careful here
         print('This should not happen-- the PairedMatchedMutect2AndVepWorkflow.r1_files key should be present in your inputs JSON file')
@@ -26,10 +27,10 @@ def check_constraints(implemented_constraint, inputs_json_path):
     constraint_value = implemented_constraint.analysisunitconstraint.value
 
     # finally we can check if the constraints are satisfied:
-    constraint_satisfied = len(fastq_list) <= constraint_value
+    constraint_satisfied = len(fastq_list) * 2 <= constraint_value
 
     message = ''
     if not constraint_satisfied:
-        message = '%d paired fastq files were submitted for analysis, but only a maximum of %d are permitted.' % (len(fastq_list), constraint_value)
+        message = '%d paired fastq files were submitted for analysis, but only a maximum of %d are permitted.' % (len(fastq_list), constraint_value * 2)
 
     return (constraint_satisfied, message)
