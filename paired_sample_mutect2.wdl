@@ -280,7 +280,7 @@ workflow PairedSampleMutect2Workflow {
         File tumor_alignment_metrics = tumor_aln_metrics.alignment_metrics
         File normal_alignment_metrics = normal_aln_metrics.alignment_metrics
         File concordance_metrics = conpair_concordance.concordance_metrics
-        File contaminiation_metrics = conpair_contamination.contaminiation_metrics
+        File contamination_metrics = conpair_contamination.contaminiation_metrics
         File tumor_coverage_metrics = tumor_coverage.coverage_metrics
         File normal_coverage_metrics = normal_coverage.coverage_metrics
     }
