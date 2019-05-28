@@ -253,13 +253,13 @@ task conpair_pileup {
                 -B ${input_dedup_bam} \
                 -O ${sample_name}.pileup \
                 --reference ${ref_fasta} \
-                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
         else
             /opt/software/Conpair-0.2/scripts/run_gatk_pileup_for_sample.py \
                 -B ${input_bam} \
                 -O ${sample_name}.pileup \
                 --reference ${ref_fasta} \
-                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+                --gatk /opt/software/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
         fi
     }
 
