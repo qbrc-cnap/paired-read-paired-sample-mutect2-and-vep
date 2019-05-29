@@ -321,7 +321,10 @@ task conpair_contamination {
         /opt/software/Conpair-0.2/scripts/estimate_tumor_normal_contamination.py \
             -T ${tumor_pileup} \
             -N ${normal_pileup} \
-            --outfile ${sample_name}.contamination_metrics.txt;
+            --outfile ${sample_name}.contamination_metrics.txt 2> catch_stderr.txt;
+        if grep -n "ValueError" catch_stderr.txt; then
+            echo "Error caught in conpair contamination. Likely cause is lack of shared depth between normal and tumor samples." > ${sample_name}.contamination_metrics.txt
+        fi
     }
 
     runtime {
