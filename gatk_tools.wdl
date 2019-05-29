@@ -289,7 +289,10 @@ task conpair_concordance {
         /opt/software/Conpair-0.2/scripts/verify_concordance.py \
             -T ${tumor_pileup} \
             -N ${normal_pileup} \
-            --outfile ${sample_name}.concordance_metrics.txt;
+            --outfile ${sample_name}.concordance_metrics.txt > stdout_log.txt;
+        if [ ! -f ${sample_name}.concordance_metrics ]; then
+            mv stdout_log.txt ${sample_name}.concordance_metrics
+        fi
     }
 
     runtime {
