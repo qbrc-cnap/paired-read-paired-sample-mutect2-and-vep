@@ -291,7 +291,7 @@ task conpair_concordance {
             -N ${normal_pileup} \
             --outfile ${sample_name}.concordance_metrics.txt > stdout_log.txt;
         if [ ! -f ${sample_name}.concordance_metrics ]; then
-            mv stdout_log.txt ${sample_name}.concordance_metrics
+            mv stdout_log.txt ${sample_name}.concordance_metrics.txt;
         fi
     }
 
