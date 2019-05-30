@@ -33,7 +33,7 @@ task vep_annotate {
         if [ ${is_vcf_empty} -eq 0 ]
         then
             echo "The Mutect2 VCF output was empty, so VEP would fail if applied to it. No annotated VCF can be provided then." > ${sample_name}.vep.tsv;
-            echo ""The Mutect2 VCF output was empty, so VEP would fail if applied to it. No annotated VCF can be provided then." > ${sample_name}.vep_stats.html;
+            echo "The Mutect2 VCF output was empty, so VEP would fail if applied to it. No annotated VCF can be provided then." > ${sample_name}.vep_stats.html;
         else
             tar xf ${vep_cache_tar};
             #working_dir=$(pwd)
