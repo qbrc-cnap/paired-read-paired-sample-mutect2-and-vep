@@ -112,6 +112,8 @@ workflow PairedMatchedMutect2AndVepWorkflow {
             tumor_dedup_metrics = paired_sample_process.tumor_deduplication_metrics,
             normal_alignment_metrics = paired_sample_process.normal_alignment_metrics,
             normal_dedup_metrics = paired_sample_process.normal_deduplication_metrics,
+            tumor_coverage_metrics = paired_sample_process.tumor_coverage_metrics,
+            normal_coverage_metrics = paired_sample_process.normal_coverage_metrics,
             tumor_r1_fastqc_zips = fastqc_for_tumor_read1.fastqc_zip,
             tumor_r2_fastqc_zips = fastqc_for_tumor_read2.fastqc_zip,
             normal_r1_fastqc_zips = fastqc_for_normal_read1.fastqc_zip,

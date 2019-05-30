@@ -3,10 +3,12 @@ workflow test_qc {
     Array[File] tumor_dedup_metrics
     Array[File] tumor_r1_fastqc_zips
     Array[File] tumor_r2_fastqc_zips
+    Array[File] tumor_coverage_metrics
     Array[File] normal_alignment_metrics
     Array[File] normal_dedup_metrics
     Array[File] normal_r1_fastqc_zips
     Array[File] normal_r2_fastqc_zips
+    Array[File] normal_coverage_metrics
 
     call create_multi_qc{
         input:
@@ -14,6 +16,8 @@ workflow test_qc {
             tumor_dedup_metrics = tumor_dedup_metrics,
             normal_alignment_metrics = normal_alignment_metrics,
             normal_dedup_metrics = normal_dedup_metrics,
+            tumor_coverage_metrics = tumor_coverage_metrics,
+            normal_coverage_metrics = normal_coverage_metrics,
             tumor_r1_fastqc_zips = tumor_r1_fastqc_zip,
             tumor_r2_fastqc_zips = tumor_r2_fastqc_zip,
             normal_r1_fastqc_zips = normal_r1_fastqc_zip,
@@ -28,10 +32,12 @@ workflow test_qc {
 task create_multi_qc {
     Array[File] tumor_alignment_metrics
     Array[File] tumor_dedup_metrics
+    Array[File] tumor_coverage_metrics
     Array[File] tumor_r1_fastqc_zips
     Array[File] tumor_r2_fastqc_zips
     Array[File] normal_alignment_metrics
     Array[File] normal_dedup_metrics
+    Array[File] normal_coverage_metrics
     Array[File] normal_r1_fastqc_zips
     Array[File] normal_r2_fastqc_zips
     Array[File] concordance_metrics
