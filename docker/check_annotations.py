@@ -27,6 +27,8 @@ def read_annotations(annotation_filepath):
             df = pd.read_excel(annotation_filepath, header=None)
         except Exception as ex:
             return (None, [generic_problem_message % 'MS Excel'])
+    else:
+        return (None, ['The file extnetion of the file was not of the following: .tsv, .csv, .xlsx, .xls'])
 
 
     # now that we have successfully parsed something.  
