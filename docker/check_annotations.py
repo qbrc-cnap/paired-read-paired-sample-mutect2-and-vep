@@ -28,7 +28,7 @@ def read_annotations(annotation_filepath):
         except Exception as ex:
             return (None, [generic_problem_message % 'MS Excel'])
     else:
-        return (None, ['The file extnetion of the file was not of the following: .tsv, .csv, .xlsx, .xls'])
+        return (None, ['Your annotation file did not have the expected extension.  We found an extension of "%s", but expected one of: csv, tsv, or Excel.' % file_extension])
 
 
     # now that we have successfully parsed something.  
