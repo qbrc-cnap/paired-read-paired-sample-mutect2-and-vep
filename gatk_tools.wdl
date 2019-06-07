@@ -99,7 +99,8 @@ task run_alignment_metrics {
     Int disk_size = 100
 
     command {
-        java -jar $PICARD_JAR \
+        mkdir tmp
+        java -Djava.io.tmpdir=./tmp -jar $PICARD_JAR \
             CollectAlignmentSummaryMetrics \
             R=${ref_fasta} \
             I=${input_bam} \
@@ -129,7 +130,8 @@ task deduplicate_bam {
     Int disk_size = 150
 
     command {
-        java -Xmx3000m -jar $PICARD_JAR \
+        mkdir tmp
+        java -Djava.io.tmpdir=./tmp -Xmx3000m -jar $PICARD_JAR \
             MarkDuplicates \
             INPUT=${input_bam} \
             OUTPUT=${sample_name}.bam \
@@ -173,7 +175,8 @@ task base_recalibrator {
     Int disk_size = 150
 
     command {
-        java -Xmx4000m -jar $GATK_JAR \
+        mkdir tmp
+        java -Djava.io.tmpdir=./tmp -Xmx4000m -jar $GATK_JAR \
             BaseRecalibrator \
             -R ${ref_fasta} \
             -I ${input_bam} \
@@ -209,7 +212,8 @@ task apply_recalibration {
     Int disk_size = 150
 
     command {
-        java -Xmx4000m -jar $GATK_JAR \
+        mkdir tmp
+        java -Djava.io.tmpdir=./tmp -Xmx4000m -jar $GATK_JAR \
             ApplyBQSR \
             -R ${ref_fasta} \
             -I ${input_bam} \
@@ -247,6 +251,8 @@ task conpair_pileup {
     Int disk_size = 250
 
     command {
+        mkdir tmp
+        TMP_DIR=`pwd`/tmp
         if [ "${use_dedup}" = "true" ]
         then
             /opt/software/Conpair-0.2/scripts/run_gatk_pileup_for_sample.py \
@@ -286,6 +292,8 @@ task conpair_concordance {
     Int disk_size = 250
 
     command {
+        mkdir tmp
+        TMP_DIR=`pwd`/tmp
         /opt/software/Conpair-0.2/scripts/verify_concordance.py \
             -T ${tumor_pileup} \
             -N ${normal_pileup} \
@@ -318,6 +326,8 @@ task conpair_contamination {
     Int disk_size = 250
 
     command {
+        mkdir tmp
+        TMP_DIR=`pwd/tmp
         /opt/software/Conpair-0.2/scripts/estimate_tumor_normal_contamination.py \
             -T ${tumor_pileup} \
             -N ${normal_pileup} \
@@ -356,9 +366,10 @@ task coverage_metrics {
     Int disk_size = 250
 
     command {
+        mkdir tmp
         if [ "${use_dedup}" = "true" ]
         then
-            java -jar -Xmx6000m -jar $PICARD_JAR \
+            java -Djava.io.tmpdir=./tmp -jar -Xmx6000m -jar $PICARD_JAR \
                 CollectWgsMetrics \
                 R=${ref_fasta} \
                 I=${input_dedup_bam} \
@@ -366,7 +377,7 @@ task coverage_metrics {
                 O=${sample_name}.coverage_metrics.txt \
                 COVERAGE_CAP=500;
         else
-            java -jar -Xmx6000m -jar $PICARD_JAR \
+            java -Djava.io.tmpdir=./tmp -jar -Xmx6000m -jar $PICARD_JAR \
                 CollectWgsMetrics \
                 R=${ref_fasta} \
                 I=${input_bam} \
@@ -406,16 +417,17 @@ task haplotypecaller {
     Int disk_size = 250
 
     command {
+        mkdir tmp
         if [ "${use_dedup}" = "true" ]
         then
-            java -Xmx8000m -jar $GATK_JAR \
+            java -Djava.io.tmpdir=./tmp -Xmx8000m -jar $GATK_JAR \
                 HaplotypeCaller \
                 -R ${ref_fasta} \
                 -I ${input_dedup_bam} \
                 -O ${sample_name}.vcf \
                 -L ${interval};
         else
-            java -Xmx8000m -jar $GATK_JAR \
+            java -Djava.io.tmpdir=./tmp -Xmx8000m -jar $GATK_JAR \
                 HaplotypeCaller \
                 -R ${ref_fasta} \
                 -I ${input_bam} \
@@ -461,9 +473,10 @@ task mutect {
     Int disk_size = 500
 
     command {
+        mkdir tmp
         if [ "${use_dedup}" = "true" ]
         then
-            java -Xmx8000m -jar $GATK_JAR \
+            java -Djava.io.tmpdir=./tmp -Xmx8000m -jar $GATK_JAR \
                 Mutect2 \
                 -R ${ref_fasta} \
                 -I ${tumor_dedup_bam} \
@@ -474,7 +487,7 @@ task mutect {
                 -L ${interval} \
                 -O ${tumor_sample_name}.vcf;
         else
-            java -Xmx8000m -jar $GATK_JAR \
+            java -Djava.io.tmpdir=./tmp -Xmx8000m -jar $GATK_JAR \
                 Mutect2 \
                 -R ${ref_fasta} \
                 -I ${tumor_bam} \
@@ -512,7 +525,8 @@ task merge_vcf {
     Int disk_size = 500
 
     command {
-        java -Xmx3000m -jar $PICARD_JAR \
+        mkdir tmp
+        java -Djava.io.tmpdir=./tmp -Xmx3000m -jar $PICARD_JAR \
             MergeVcfs \
             INPUT=${sep=' INPUT=' input_vcfs} \
             OUTPUT=${sample_name}.vcf;
