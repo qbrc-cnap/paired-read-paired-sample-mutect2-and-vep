@@ -175,7 +175,6 @@ task match_samples {
     }
 
     runtime {
-        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 1
         memory: "2 G"
@@ -213,7 +212,6 @@ task zip_results {
     }
 
     runtime {
-        zones: "us-east4-c"
         docker: "docker.io/hsphqbrc/gatk-mutect2-workflow-tools:1.0"
         cpu: 2
         memory: "6 G"

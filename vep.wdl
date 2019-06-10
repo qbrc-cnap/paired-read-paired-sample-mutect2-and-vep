@@ -56,7 +56,6 @@ task vep_annotate {
     }
 
     runtime {
-        zones: "us-east4-c"
         docker: "docker.io/ensemblorg/ensembl-vep:release_95.0"
         cpu: 4
         memory: "12 G"
