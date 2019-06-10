@@ -32,12 +32,12 @@ workflow test_qc {
 task create_multi_qc {
     Array[File] tumor_alignment_metrics
     Array[File] tumor_dedup_metrics
-    Array[File] tumor_coverage_metrics
+    #Array[File] tumor_coverage_metrics
     Array[File] tumor_r1_fastqc_zips
     Array[File] tumor_r2_fastqc_zips
     Array[File] normal_alignment_metrics
     Array[File] normal_dedup_metrics
-    Array[File] normal_coverage_metrics
+    #Array[File] normal_coverage_metrics
     Array[File] normal_r1_fastqc_zips
     Array[File] normal_r2_fastqc_zips
     Array[File] concordance_metrics
