@@ -2,19 +2,42 @@ import subprocess as sp
 import argparse
 import sys
 import os
+import signal
 
 R1 = 'r1'
 R2 = 'r2'
 
-def run_cmd(cmd, return_stderr=False):
+# This sets a timeout on the fastqValidator
+TIMEOUT = 3600 # seconds
+
+class TimeoutException(Exception):
+    pass
+
+
+def timeout_handler(signum, frame):
+    '''
+    Can add other behaviors here if desired.  This function
+    is hit if the timeout occurs
+    '''
+    raise TimeoutException('')
+
+
+def run_cmd(cmd, return_stderr=False, set_timeout=False):
     '''
     Runs a command through the shell
     '''
+    if set_timeout:
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(TIMEOUT)
+
     p = sp.Popen(cmd, shell=True, stderr=sp.PIPE, stdout=sp.PIPE)
-    stdout, stderr = p.communicate()
-    if return_stderr:
-        return (p.returncode, stderr.decode('utf-8'))
-    return (p.returncode, stdout.decode('utf-8'))
+    try:
+        stdout, stderr = p.communicate()
+        if return_stderr:
+            return (p.returncode, stderr.decode('utf-8'))
+        return (p.returncode, stdout.decode('utf-8'))
+    except TimeoutException as ex:
+        return (1, 'A process is taking unusually long to complete.  It is likely that the FASTQ file is corrupted.  The process run was %s' % cmd)
 
 
 def check_fastq_format(f):
@@ -24,7 +47,7 @@ def check_fastq_format(f):
     the error goes to stdout.  If OK, then return code is zero.
     '''
     cmd = 'fastQValidator --file %s' % f
-    rc, stdout_string = run_cmd(cmd)
+    rc, stdout_string = run_cmd(cmd, set_timeout=True)
     if rc == 1:
         return [stdout_string]
     return []
