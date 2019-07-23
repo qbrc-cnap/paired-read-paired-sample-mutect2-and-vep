@@ -3,7 +3,7 @@
 from base.models import Resource
 import os
 
-def map_inputs(user, unmapped_data, id_list):
+def map_inputs(user, all_data, data_name, id_list):
     '''
     `user` is a User instance (or subclass).  This gives us
     the option of applying user-specific logic to the mapping.
@@ -23,6 +23,7 @@ def map_inputs(user, unmapped_data, id_list):
     matches the order in gui.json 
 
     '''
+    unmapped_data = all_data[data_name]
     r1_suffix = '_R1.fastq.gz'
     r2_suffix = '_R2.fastq.gz'
     r1_path_list = []
