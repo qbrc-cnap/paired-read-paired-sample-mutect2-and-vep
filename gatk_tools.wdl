@@ -321,7 +321,7 @@ task conpair_contamination {
 
     command {
         mkdir tmp
-        TMP_DIR=`pwd/tmp
+        TMP_DIR=`pwd`/tmp
         /opt/software/Conpair-0.2/scripts/estimate_tumor_normal_contamination.py \
             -T ${tumor_pileup} \
             -N ${normal_pileup} \
